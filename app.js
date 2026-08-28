@@ -35,25 +35,37 @@ const livePowerUnits = [
 ];
 
 const liveLeaders = [
-  {name:"강선종",region:"KR",rate:"Division IV · 62 LP",games:32,top4:84.4,win:53.1},
-  {name:"SanChess",region:"KR",rate:"Division IV · 23 LP",games:34,top4:91.2,win:29.4},
-  {name:"ErenYeager",region:"VN",rate:"Division I · 76 LP",games:34,top4:85.3,win:29.4},
-  {name:"HND",region:"VN",rate:"Division I · 58 LP",games:35,top4:80.0,win:34.3},
-  {name:"Đầu Bếp Nấu Chè",region:"VN",rate:"Division I · 13 LP",games:38,top4:78.9,win:31.6},
-  {name:"AXM Maha",region:"SEA",rate:"Division I · 3 LP",games:37,top4:86.5,win:29.7},
-  {name:"Ssangyeop",region:"KR",rate:"Division I · 2 LP",games:27,top4:88.9,win:40.7},
-  {name:"Kojnid",region:"EUW",rate:"Division II · 98 LP",games:26,top4:92.3,win:42.3},
-  {name:"magicdragon1",region:"VN",rate:"Division II · 90 LP",games:41,top4:68.3,win:26.8},
-  {name:"Llaih",region:"VN",rate:"Division II · 87 LP",games:33,top4:87.9,win:21.2}
+  {name:"Kojnid",region:"EUW",rate:"Division II · 33 LP",games:39,top4:87.2,win:41.0},
+  {name:"MF deep b1ue",region:"VN",rate:"Division II · 28 LP",games:52,top4:71.2,win:42.3},
+  {name:"HND",region:"VN",rate:"Division II · 7 LP",games:56,top4:78.6,win:26.8},
+  {name:"Fer",region:"SEA",rate:"Division II · 0 LP",games:37,top4:91.9,win:43.2},
+  {name:"ego illusions",region:"BR",rate:"Division III · 71 LP",games:44,top4:88.6,win:36.4},
+  {name:"혁 듕",region:"KR",rate:"Division III · 67 LP",games:51,top4:78.4,win:35.3},
+  {name:"ErenYeager",region:"VN",rate:"Division III · 60 LP",games:40,top4:85.0,win:35.0},
+  {name:"오박사",region:"KR",rate:"Division III · 48 LP",games:46,top4:69.6,win:39.1},
+  {name:"강선종",region:"KR",rate:"Division III · 38 LP",games:42,top4:78.6,win:45.2},
+  {name:"Asta1 nè",region:"VN",rate:"Division III · 37 LP",games:46,top4:73.9,win:32.6}
 ];
 const liveItems = [
-  {name:"ガーゴイル ストーンプレート",play:4.03,avg:3.83,top4:65.2},
-  {name:"グインソー レイジブレード",play:3.24,avg:3.65,top4:69.6},
-  {name:"ジュエル ガントレット",play:3.06,avg:3.84,top4:64.9},
-  {name:"ワーモグ アーマー",play:2.77,avg:3.42,top4:74.4},
-  {name:"ショウジンの矛",play:2.49,avg:3.54,top4:70.9},
-  {name:"インフィニティ エッジ",play:2.50,avg:3.97,top4:61.0}
+  {name:"ガーゴイル ストーンプレート",play:5.19,avg:4.40,top4:51.9,win:13.1},
+  {name:"ワーモグ アーマー",play:3.91,avg:4.29,top4:54.1,win:13.8},
+  {name:"グインソー レイジブレード",play:3.82,avg:4.48,top4:50.1,win:13.3},
+  {name:"ショウジンの矛",play:3.53,avg:4.28,top4:54.0,win:14.1},
+  {name:"ジュエル ガントレット",play:3.51,avg:4.35,top4:52.8,win:13.2},
+  {name:"スピリット ビサージュ",play:3.01,avg:4.29,top4:54.0,win:14.0},
+  {name:"プロテクターの誓い",play:2.66,avg:4.21,top4:55.4,win:14.2},
+  {name:"ジャイアント スレイヤー",play:2.55,avg:4.21,top4:55.6,win:14.4},
+  {name:"インフィニティ エッジ",play:2.49,avg:4.28,top4:53.7,win:14.7},
+  {name:"盗賊のグローブ",play:2.40,avg:4.05,top4:58.3,win:16.1}
 ];
+
+const eliteUnitUsage = [
+  ["センチネル",29,2.54],["ケネン",28,1.54],["アーリ",20,1.46],["セット",18,1.81],
+  ["マルファイト",15,1.10],["ザイラ",14,1.58],["アフェリオス",13,1.55],["ラックス",12,1.18],
+  ["ソラカ",11,1.05],["モルガナ",11,0.92],["マオカイ",9,1.41],["ブランブルバック",6,0.74],
+  ["エズリアル",6,0.96],["アッシュ",6,1.12],["アルーン",6,0.82],["シヴィア",6,0.88],
+  ["ドレイヴン",6,0.79],["アムム",5,1.83],["エルダードラゴン",5,0.46],["ナー",4,1.99]
+].map(([name,count,overall])=>({name,count,elite:count/50*100,overall:overall/8*100,delta:count/50*100-overall/8*100}));
 
 const artifacts = [
   {name:"ウィッツ エンド",type:"S · PBE #1",icon:"✧",holders:["ケイル","マスター・イー","ザヤ","アジール"],avg:3.80,win:19.4,note:"PBE平均順位順。1位装備先ケイルは平均3.23。"},
@@ -76,12 +88,12 @@ const artifactAverage = artifacts.reduce((sum,item)=>sum+item.avg,0)/artifacts.l
 const metaCdn = "https://cdn.metatft.com/file/metatft";
 const championSlugs = {
   "アカリ":"akali","カルマ":"karma","カミール":"camille","オーン":"ornn","ザヤ":"xayah","ヴァルス":"varus","ベイガー":"veigar","モルガナ":"morgana","ケイトリン":"caitlyn",
-  "ケイル":"kayle","マスター・イー":"masteryi","アジール":"azir","レンガー":"rengar","ワーウィック":"warwick","トリスターナ":"tristana","レオナ":"leona","セジュアニ":"sejuani","マルファイト":"malphite","カシオペア":"cassiopeia","ルブラン":"leblanc","小石":"pebbles","ユナラ":"yunara","ドレイヴン":"draven","アリスター":"alistar","マオカイ":"maokai","セット":"sett","ザイラ":"zyra","アフェリオス":"aphelios","アーリ":"ahri","シヴィア":"sivir","ヘカリム":"hecarim","アムム":"amumu"
+  "ケイル":"kayle","マスター・イー":"masteryi","アジール":"azir","レンガー":"rengar","ワーウィック":"warwick","トリスターナ":"tristana","レオナ":"leona","セジュアニ":"sejuani","マルファイト":"malphite","カシオペア":"cassiopeia","ルブラン":"leblanc","小石":"pebbles","ユナラ":"yunara","ドレイヴン":"draven","アリスター":"alistar","マオカイ":"maokai","セット":"sett","ザイラ":"zyra","アフェリオス":"aphelios","アーリ":"ahri","シヴィア":"sivir","ヘカリム":"hecarim","アムム":"amumu","センチネル":"sentinel","ケネン":"kennen","ラックス":"lux","ソラカ":"soraka","ブランブルバック":"brambleback","エズリアル":"ezreal","アッシュ":"ashe","アルーン":"alune","エルダードラゴン":"elderdragon","ナー":"gnar"
 };
 const itemSlugs = {
   "デスブレード":"deathblade","ヘクステック ガンブレード":"hextechgunblade","ストライカー フレイル":"strikersflail","ハンド オブ ジャスティス":"handofjustice","インフィニティ エッジ":"infinityedge","ショウジンの矛":"spearofshojin","ジュエル ガントレット":"jeweledgauntlet","ナッシャー トゥース":"nashorstooth","ラバドン デスキャップ":"rabadonsdeathcap","アークエンジェル スタッフ":"archangelsstaff","ブラッドサースター":"bloodthirster","タイタンの誓い":"titansresolve","ステラックの篭手":"steraksgage","クラウンガード":"crownguard","ガーゴイル ストーンプレート":"gargoylestoneplate","スピリット ビサージュ":"spiritvisage","ワーモグ アーマー":"warmogsarmor","ドラゴン クロウ":"dragonsclaw","ブランブル ベスト":"bramblevest","グインソー レイジブレード":"guinsoosrageblade","ラスト ウィスパー":"lastwhisper","ジャイアント スレイヤー":"giantslayer","レッド バフ":"redbuff","レッドバフ":"redbuff","モレロノミコン":"morellonomicon","ステッドファスト ハート":"steadfastheart","アイオニック スパーク":"ionicspark"
 };
-Object.assign(itemSlugs,{"クラーケン フューリー":"krakensfury","ブルー バフ":"bluebuff","サンファイア ケープ":"sunfirecape","プロテクターの誓い":"protectorsvow"});
+Object.assign(itemSlugs,{"クラーケン フューリー":"krakensfury","ブルー バフ":"bluebuff","サンファイア ケープ":"sunfirecape","プロテクターの誓い":"protectorsvow","盗賊のグローブ":"thievesgloves"});
 const artifactSlugs = {
   "ウィッツ エンド":"witsend","タイタン ハイドラ":"titanichydra","フリッカーブレード":"navoriflickerblade","ライトシールドのクレスト":"lightshieldcrest","不滅の協定":"eternalpact","ゴールド コレクター":"goldcollector","フィッシュボーン":"fishbones","ラピッド ファイアキャノン":"rapidfirecannon","不屈":"theindomitable"
 };
@@ -204,15 +216,19 @@ function renderOverview(){
 }
 
 function renderProgression(){
-  return `<section class="panel progression-panel"><div class="panel-head"><div><h2>18.1 LIVE 初動構成</h2><p>tactics.tools · 2026-08-27 17:47 JST取得 · Gold+ · 過去2日</p></div><span class="sync-badge">LIVE</span></div><div class="progression-grid"><div><small>Lv7リロール · 採用率 0.21</small><b>ディフェンダー カシオペア＆フィドル</b><span>平均3.93 · Top4 61.0% · 1位15.3%</span></div><div><small>Lv7リロール · 採用率 0.23</small><b>ブロッサム マスター・イー＆コグ＝マウ</b><span>平均4.04 · Top4 58.3% · 1位15.5%</span></div><div><small>Fast Lv8 · 採用率 0.16</small><b>エルダーウッド ドレイヴン＆エズリアル</b><span>平均4.17 · Top4 53.8% · 1位22.4%</span></div></div><p class="vod-caution">開幕直後は母数が小さく上振れが大きいため、進行駒の確定評価はステージ別データの蓄積後に行います。</p></section>`;
+  return `<section class="panel progression-panel"><div class="panel-head"><div><h2>18.1 LIVE 初動構成</h2><p>tactics.tools · 2026-08-28 09:23 JST取得 · Platinum+ · 過去2日</p></div><span class="sync-badge">LIVE</span></div><div class="progression-grid"><div><small>Lv7リロール · 採用率 0.30</small><b>ディフェンダー カシオペア＆フィドル</b><span>平均4.07 · Top4 59.0% · 1位14.5%</span></div><div><small>Lv5リロール · 採用率 0.13</small><b>リフトビースト ペブルス＆クルーグ</b><span>平均4.17 · Top4 56.1% · 1位10.7%</span></div><div><small>Lv7リロール · 採用率 0.27</small><b>ブロッサム マスター・イー＆コグ＝マウ</b><span>平均4.27 · Top4 55.3% · 1位14.1%</span></div></div><p class="vod-caution">開幕直後は母数が小さく上振れが大きいため、進行駒の確定評価はステージ別データの蓄積後に行います。</p></section>`;
 }
 
 function renderLiveItems(){
-  return `<section class="panel progression-panel"><div class="panel-head"><div><h2>高使用率アイテム</h2><p>tactics.tools · Patch 18.1 LIVE。採用率が高い通常アイテムを成績付きで表示</p></div><span class="sync-badge">LIVE</span></div><div class="artifact-catalog">${liveItems.map((item,i)=>`<article class="catalog-card">${itemImage(item.name,"catalog-image")}<div class="catalog-main"><small>#${i+1} · 使用率順</small><h3>${item.name}</h3><div class="catalog-stats"><span>採用率<b>${item.play}/8</b></span><span>平均<b>${item.avg}</b></span><span>Top4<b>${item.top4}%</b></span></div></div></article>`).join("")}</div></section>`;
+  return `<section class="panel progression-panel"><div class="panel-head"><div><h2>全体平均：高使用率アイテム</h2><p>tactics.tools · Patch 18.1 LIVE · Platinum+。世界上位50の個別装備履歴とは混ぜず、全体基準として表示</p></div><span class="sync-badge">LIVE</span></div><div class="artifact-catalog">${liveItems.map((item,i)=>`<article class="catalog-card">${itemImage(item.name,"catalog-image")}<div class="catalog-main"><small>#${i+1} · 使用率順</small><h3>${item.name}</h3><div class="catalog-stats"><span>採用率<b>${item.play}/8</b></span><span>平均<b>${item.avg}</b></span><span>Top4<b>${item.top4}%</b></span><span>1位<b>${item.win}%</b></span></div></div></article>`).join("")}</div><p class="vod-caution">順位表はTop Carriesのみ公開しており、選手別の全アイテム履歴は含みません。そのため上位50アイテムの差分は、誤った推定値を出さず「取得待ち」としています。</p></section>`;
+}
+
+function renderEliteUnits(){
+  return `<section class="panel progression-panel"><div class="panel-head"><div><h2>世界上位50 vs 全体平均</h2><p>上位50名×Top Carries 5枠＝250枠 · 2026-08-28取得</p></div><span class="sync-badge">50 / 50</span></div><div class="table-wrap"><table><thead><tr><th>駒</th><th>上位50 採用人数</th><th>上位50 使用率</th><th>全体盤面率</th><th>差</th></tr></thead><tbody>${eliteUnitUsage.map(u=>`<tr><td class="player-cell">${championImage(u.name,"item-thumb")} ${u.name}</td><td>${u.count} / 50</td><td><b>${u.elite.toFixed(1)}%</b></td><td>${u.overall.toFixed(1)}%</td><td class="${u.delta>=0?"gain":"loss"}">${u.delta>=0?"+":""}${u.delta.toFixed(1)}pt</td></tr>`).join("")}</tbody></table></div><p class="vod-caution">上位50は各選手のTop Carriesに登場したか、全体はPlatinum+の1ロビー8人あたり採用数÷8で比較。対象期間と指標が完全一致しないため、差は傾向確認用です。</p></section>`;
 }
 
 function renderPlayers(){
-  return `<div class="view"><div class="data-source"><b>18.1 LIVE</b><span>tactics.tools · グローバルランキング · 2026-08-27更新。開幕直後のためLPと順位は急変します。</span></div><div class="section-head"><div><h2>現在のグローバル上位10名</h2><p>順位、地域、現在レート、試合数、Top4率、1位率を表示しています。</p></div></div><section class="panel"><div class="table-wrap"><table><thead><tr><th>順位</th><th>プレイヤー</th><th>地域</th><th>現在レート</th><th>試合</th><th>Top4率</th><th>1位率</th></tr></thead><tbody>${liveLeaders.map((p,i)=>`<tr><td class="rank">#${i+1}</td><td class="player-cell">${p.name}</td><td>${p.region}</td><td class="lp">${p.rate}</td><td>${p.games}</td><td>${p.top4.toFixed(1)}%</td><td>${p.win.toFixed(1)}%</td></tr>`).join("")}</tbody></table></div></section></div>`;
+  return `<div class="view"><div class="data-source"><b>18.1 LIVE</b><span>tactics.tools · グローバル上位50名を取得 · 2026-08-28更新。レート順位は開幕直後のため急変します。</span></div><div class="section-head"><div><h2>現在のグローバル上位10名</h2><p>順位、地域、現在レート、試合数、Top4率、1位率を表示しています。</p></div></div><section class="panel"><div class="table-wrap"><table><thead><tr><th>順位</th><th>プレイヤー</th><th>地域</th><th>現在レート</th><th>試合</th><th>Top4率</th><th>1位率</th></tr></thead><tbody>${liveLeaders.map((p,i)=>`<tr><td class="rank">#${i+1}</td><td class="player-cell">${p.name}</td><td>${p.region}</td><td class="lp">${p.rate}</td><td>${p.games}</td><td>${p.top4.toFixed(1)}%</td><td>${p.win.toFixed(1)}%</td></tr>`).join("")}</tbody></table></div></section>${renderEliteUnits()}</div>`;
   return `<div class="view"><div class="data-source warning"><b>LIVE同期待ち</b><span>下表はUI確認用サンプルで、実在ランキングではありません。Set 18の15地域ランキング取得後に置き換えます。</span></div><div class="section-head"><div><h2>チャレンジャーランキング</h2><p>LIVE実測への切り替え待ちです。</p></div></div><section class="panel">${leaderboard(filteredPlayers(),true)}</section></div>`;
 }
 

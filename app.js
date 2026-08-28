@@ -79,6 +79,22 @@ const artifacts = [
   {name:"不屈",type:"S · PBE #15",icon:"⬡",holders:["オーン","セジュアニ","アリスター","マオカイ"],avg:4.20,win:14.7,note:"セジュアニ平均3.52、勝率24.2%。"}
 ];
 
+const artifactHolderAverages = {
+  "ウィッツ エンド":{"ケイル":3.23},
+  "タイタン ハイドラ":{"ザヤ":3.49,"マスター・イー":3.47},
+  "フリッカーブレード":{"ケイル":3.23,"ザヤ":3.66},
+  "ライトシールドのクレスト":{"オーン":3.71,"レオナ":3.54},
+  "不滅の協定":{"ベイガー":3.57},
+  "ゴールド コレクター":{"ユナラ":3.33},
+  "フィッシュボーン":{"ドレイヴン":3.47},
+  "ラピッド ファイアキャノン":{"ワーウィック":3.78,"マスター・イー":3.60},
+  "不屈":{"セジュアニ":3.52}
+};
+
+function holderAverage(artifact,champion){
+  return artifactHolderAverages[artifact]?.[champion];
+}
+
 const artifactCatalog = [
   ["ウィッツ エンド","S",3.80,-0.70,19.4,1.0,"da_artifact_witsend.png"],["フリッカーブレード","S",3.90,-0.60,17.8,2.3,"da_artifact_navoriflickerblade.png"],["不滅の協定","S",4.00,-0.50,16.2,0.7,"da_artifact_eternalpact.png"],["ラピッド ファイアキャノン","S",4.01,-0.49,16.7,1.3,"da_artifact_rapidfirecannon.png"],["ライトシールドのクレスト","S",4.01,-0.49,16.4,1.4,"da_artifact_lightshieldcrest.png"],["獄炎のハチェット","S",4.01,-0.49,15.0,0.8,"da_artifact_hellfirehatchet.png"],["ゴールド コレクター","S",4.04,-0.46,17.9,0.9,"da_artifact_goldcollector.png"],["枯死の宝石","S",4.10,-0.40,16.5,1.0,"da_artifact_blightingjewel.png"],["ドーンコア","S",4.11,-0.39,15.0,1.6,"da_artifact_dawncore.png"],["タイタン ハイドラ","S",4.11,-0.39,13.9,0.8,"da_artifact_titanichydra.png"],["ミトン","S",4.11,-0.39,15.4,1.0,"da_artifact_mittens.png"],["インフィニティ フォース","S",4.19,-0.31,13.9,1.2,"da_artifact_infinityforce.png"],["リッチ ベイン","S",4.19,-0.31,13.3,0.8,"da_artifact_lichbane.png"],["ヴォイド ガントレット","S",4.19,-0.31,13.9,0.8,"da_artifact_voidgauntlet.png"],["不屈","S",4.20,-0.30,14.7,1.6,"da_artifact_theindomitable.png"],["ゾーニャの遡時計","A",4.20,-0.30,15.6,0.6,"da_artifact_zhonyasparadox.png"],["ホライゾン フォーカス","A",4.23,-0.27,13.8,0.4,"da_artifact_horizonfocus.png"],["スタティック シヴ","A",4.25,-0.25,13.6,1.0,"da_artifact_statikkshiv.png"],["夜明けの加護","A",4.26,-0.24,13.0,1.2,"da_artifact_aegisofdawn.png"],["ルーデン テンペスト","A",4.26,-0.24,13.1,0.9,"da_artifact_ludenstempest.png"],["超越のタリスマン","A",4.28,-0.22,13.1,0.6,"da_item_artifact_talismanofascension.png"],["フィッシュボーン","A",4.28,-0.22,14.2,1.1,"da_artifact_fishbones.png"],["モーグル メイル","A",4.28,-0.22,14.6,2.0,"da_artifact_mogulsmail.png"],["ギャンブラーの剣","B",4.30,-0.20,15.1,0.9,"da_artifact_gamblersblade.png"],["夕闇の加護","B",4.35,-0.15,12.7,1.0,"da_artifact_aegisofdusk.png"],["シーカー アームガード","B",4.35,-0.15,14.6,1.0,"da_artifact_seekersarmguard.png"],["マナザネ","B",4.35,-0.15,12.7,1.4,"da_artifact_manazane.png"],["フォビドゥン アイドル","B",4.36,-0.14,13.2,0.8,"da_artifact_forbiddenidol.png"],["ハルクラッシャー","B",4.37,-0.13,12.6,0.8,"da_artifact_hullcrusher.png"],["シルバーミアの夜明け","D",4.61,0.11,10.9,0.4,"da_artifact_silvermeredawn.png"],["デス ディファイアンス","D",4.77,0.27,8.2,0.7,"da_artifact_deathsdefiance.png"]
 ].map(([name,tier,avg,delta,win,freq,file],i)=>({rank:i+1,name,tier,avg,delta,win,freq,file}));
@@ -238,7 +254,7 @@ function renderUnits(){
 }
 
 function renderArtifacts(){
-  return `<div class="view"><div class="data-source"><b>PBE 18.1 Aug-10</b><span>MetaTFT · 過去3日間 · 740,208構成 · 全31種を平均順位順に表示</span></div><div class="section-head"><div><h2>アーティファクト全一覧</h2><p>平均順位、4.50位との差、勝率、使用率を同じカードで比較できます。</p></div></div><div class="impact-legend"><span><i class="positive-dot"></i>マイナス：4.50位より良い</span><span><i class="negative-dot"></i>プラス：4.50位より悪い</span><small>装備した盤面との相関値であり、装備単体の因果効果ではありません。</small></div><div class="artifact-catalog">${artifactCatalog.map(a=>`<article class="catalog-card">${artifactFileImage(a)}<div class="catalog-main"><small>#${a.rank} · Tier ${a.tier}</small><h3>${a.name}</h3><div class="catalog-stats"><span>平均<b>${a.avg.toFixed(2)}</b></span><span>4.50比<b class="${a.delta<=0?"gain":"loss"}">${a.delta>0?"+":""}${a.delta.toFixed(2)}</b></span><span>勝率<b>${a.win}%</b></span><span>使用率<b>${a.freq}%</b></span></div></div></article>`).join("")}</div><div class="section-head artifact-detail-head"><div><h2>装備先データ取得済み</h2><p>装備先上位の駒まで確認できた9件です。</p></div></div><div class="artifact-grid">${artifacts.map(a=>`<article class="artifact-card"><div class="artifact-head">${artifactImage(a.name)}<div><h3>${a.name}</h3><span>${a.type}</span></div><div class="artifact-score"><b>${a.avg.toFixed(2)}</b><small>平均順位</small></div></div><div class="impact-summary">${impactBadge(a.avg,neutralPlacement,"4.50位との比較")}</div><p class="artifact-note">${a.note}</p><div class="holder-list">${a.holders.map((h,i)=>`<div>${championImage(h,"holder-thumb")}<span class="holder-rank">${i+1}</span><b>${h}</b><small>${i===0?"PBE最上位":"上位"}</small></div>`).join("")}</div><div class="artifact-foot"><span>勝率 <b>${a.win}%</b></span><span>PBE実測</span></div></article>`).join("")}</div></div>`;
+  return `<div class="view"><div class="data-source"><b>PBE 18.1 Aug-10</b><span>MetaTFT · 過去3日間 · 740,208構成 · 全31種を平均順位順に表示</span></div><div class="section-head"><div><h2>アーティファクト全一覧</h2><p>平均順位、4.50位との差、勝率、使用率を同じカードで比較できます。</p></div></div><div class="impact-legend"><span><i class="positive-dot"></i>マイナス：4.50位より良い</span><span><i class="negative-dot"></i>プラス：4.50位より悪い</span><small>装備した盤面との相関値であり、装備単体の因果効果ではありません。</small></div><div class="artifact-catalog">${artifactCatalog.map(a=>`<article class="catalog-card">${artifactFileImage(a)}<div class="catalog-main"><small>#${a.rank} · Tier ${a.tier}</small><h3>${a.name}</h3><div class="catalog-stats"><span>平均<b>${a.avg.toFixed(2)}</b></span><span>4.50比<b class="${a.delta<=0?"gain":"loss"}">${a.delta>0?"+":""}${a.delta.toFixed(2)}</b></span><span>勝率<b>${a.win}%</b></span><span>使用率<b>${a.freq}%</b></span></div></div></article>`).join("")}</div><div class="section-head artifact-detail-head"><div><h2>装備先データ取得済み</h2><p>駒の横に、その駒が装備した場合の平均順位を表示します。未確認値は推定しません。</p></div></div><div class="artifact-grid">${artifacts.map(a=>`<article class="artifact-card"><div class="artifact-head">${artifactImage(a.name)}<div><h3>${a.name}</h3><span>${a.type}</span></div><div class="artifact-score"><b>${a.avg.toFixed(2)}</b><small>全装備先平均</small></div></div><div class="impact-summary">${impactBadge(a.avg,neutralPlacement,"4.50位との比較")}</div><p class="artifact-note">${a.note}</p><div class="holder-list">${a.holders.map((h,i)=>{const avg=holderAverage(a.name,h);return `<div>${championImage(h,"holder-thumb")}<span class="holder-rank">${i+1}</span><b>${h}</b><small>${avg===undefined?"平均 未取得":`平均 ${avg.toFixed(2)}位`}</small></div>`}).join("")}</div><div class="artifact-foot"><span>勝率 <b>${a.win}%</b></span><span>PBE実測</span></div></article>`).join("")}</div></div>`;
 }
 
 function renderTraits(){
@@ -266,7 +282,7 @@ function hydrateArtifactRecommendations(){
     const detail=artifacts.find(a=>a.name===name);
     const row=document.createElement("div");
     row.className="catalog-holders";
-    row.innerHTML=detail?`<small>PBE相性上位 · LIVE更新待ち</small>${detail.holders.slice(0,3).map(h=>`<button type="button" title="${h}" data-holder="${h}" data-artifact="${name}">${championImage(h,"holder-thumb")}</button>`).join("")}`:`<small>相性駒 LIVE集計中</small>`;
+    row.innerHTML=detail?`<small>PBE相性上位 · LIVE更新待ち</small>${detail.holders.slice(0,3).map(h=>{const avg=holderAverage(name,h);return `<button type="button" title="${h}${avg===undefined?"":` · 平均${avg.toFixed(2)}位`}" data-holder="${h}" data-artifact="${name}">${championImage(h,"holder-thumb")}<span>${avg===undefined?"—":avg.toFixed(2)}</span></button>`}).join("")}`:`<small>相性駒 LIVE集計中</small>`;
     card.querySelector(".catalog-main")?.appendChild(row);
   });
   document.querySelectorAll(".catalog-holders [data-holder]").forEach(button=>button.addEventListener("click",()=>openArtifactHolder(button.dataset.holder,button.dataset.artifact)));

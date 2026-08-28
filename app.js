@@ -67,6 +67,29 @@ const eliteUnitUsage = [
   ["ドレイヴン",6,0.79],["アムム",5,1.83],["エルダードラゴン",5,0.46],["ナー",4,1.99]
 ].map(([name,count,overall])=>({name,count,elite:count/50*100,overall:overall/8*100,delta:count/50*100-overall/8*100}));
 
+const emblems = [
+  ["処刑人","Executioner",0.40,4.12,57.0,16.9,["ドレイヴン","ザイラ","アーリ","ラックス"],"ドレイヴン主力の処刑人軸","DA_18_EmblemExecutioner.png"],
+  ["ブローラー","Brawler",0.33,3.96,60.3,15.9,["マスター・イー","ワーウィック"],"マスター・イー／ワーウィック主力のブローラー軸","DA_18_EmblemBrawler.png"],
+  ["ブロッサム","Blossom",0.33,4.34,52.4,15.4,["ナー","ザイラ","シヴィア"],"ブロッサム縦伸ばし＋ナーまたはザイラ","DA_18_EmblemBlossom.png"],
+  ["インヴォーカー","Invoker",0.30,4.09,58.0,15.9,["アルーン","グロンプ","ニダリー","ラックス"],"アルーン主力のインヴォーカー軸","DA_18_EmblemInvoker.png"],
+  ["ヴァンガード","Vanguard",0.28,4.04,58.6,14.9,["ブランブルバック"],"ブランブルバック前衛＋ヴァンガード縦伸ばし","DA_18_EmblemVanguard.png"],
+  ["ルナー","Lunar",0.25,4.27,54.9,13.3,[],"ルナーの発動段階を上げる構成","DA_18_EmblemLunar.png"],
+  ["フェイ","Fae",0.24,4.12,56.0,20.6,["シヴィア","レンガー"],"シヴィア／レンガー主力のフェイ軸","DA_18_EmblemFae.png"],
+  ["スペルウィーバー","Spellweaver",0.24,4.18,55.4,15.4,["モルガナ","ラックス","ソラカ"],"モルガナまたはラックス主力のAP構成","DA_18_EmblemSpellweaver.png"],
+  ["ラピッドファイア","Rapidfire",0.24,4.12,57.3,15.0,["ブランブルバック","レンガー"],"ラピッドファイア縦伸ばし＋物理主力","DA_18_EmblemRapidfire.png"],
+  ["エルダーウッド","Elderwood",0.22,4.18,54.8,17.4,[],"エルダーウッド縦伸ばし構成","DA_18_EmblemElderwood.png"],
+  ["ハンター","Hunter",0.22,4.23,54.8,15.9,["レンガー"],"レンガー主力のハンター軸","DA_18_EmblemHunter.png"],
+  ["ディフェンダー","Defender",0.22,4.03,58.1,16.6,["レンガー"],"ディフェンダー前衛＋レンガー主力","DA_18_EmblemDefender.png"],
+  ["フローラ・ファタリス","Flora Fatalis",0.21,3.84,62.3,18.7,["ベイガー","カシオペア"],"ベイガー／カシオペア主力のフローラ軸","DA_18_EmblemFloraFatalis.png"],
+  ["ジャガーノート","Juggernaut",0.19,3.92,60.9,18.9,[],"ジャガーノート前衛を縦に伸ばす構成","DA_18_EmblemJuggernaut.png"],
+  ["インフェルノ","Inferno",0.17,4.20,54.4,16.7,[],"インフェルノ縦伸ばし＋AP主力","DA_18_EmblemInferno.png"],
+  ["ブラックソーン","Blackthorn",0.16,4.55,49.0,12.1,["マークウルフ","カ＝ジックス"],"マークウルフ／カ＝ジックス主力のブラックソーン軸","DA_18_EmblemBlackthorn.png"],
+  ["プライマル","Primal",0.16,4.44,51.2,12.1,[],"プライマルの発動段階を上げる構成","DA_18_EmblemPrimal.png"],
+  ["スプライキン","Sprykin",0.16,4.17,55.4,15.7,["レンガー","レク＝サイ"],"レンガー／レク＝サイ主力のスプライキン軸","DA_18_EmblemSprykin.png"],
+  ["ラヴェジャー","Ravager",0.15,4.30,54.6,12.8,["レンガー"],"レンガー主力のラヴェジャー軸","DA_18_EmblemSlayer.png"],
+  ["カヴン","Coven",0.08,5.10,39.2,10.2,[],"カヴン縦伸ばし（現状は低サンプル・低成績）","DA_18_EmblemCoven.png"]
+].map(([name,en,play,avg,top4,win,holders,comp,file],i)=>({rank:i+1,name,en,play,avg,top4,win,holders,comp,file}));
+
 const artifacts = [
   {name:"ウィッツ エンド",type:"S · PBE #1",icon:"✧",holders:["ケイル","マスター・イー","ザヤ","アジール"],avg:3.80,win:19.4,note:"PBE平均順位順。1位装備先ケイルは平均3.23。"},
   {name:"タイタン ハイドラ",type:"S · 装備先データあり",icon:"◆",holders:["ザヤ","マスター・イー","レンガー","ワーウィック"],avg:4.11,win:13.9,note:"ザヤ平均3.49、マスター・イー平均3.47。"},
@@ -104,7 +127,7 @@ const artifactAverage = artifacts.reduce((sum,item)=>sum+item.avg,0)/artifacts.l
 const metaCdn = "https://cdn.metatft.com/file/metatft";
 const championSlugs = {
   "アカリ":"akali","カルマ":"karma","カミール":"camille","オーン":"ornn","ザヤ":"xayah","ヴァルス":"varus","ベイガー":"veigar","モルガナ":"morgana","ケイトリン":"caitlyn",
-  "ケイル":"kayle","マスター・イー":"masteryi","アジール":"azir","レンガー":"rengar","ワーウィック":"warwick","トリスターナ":"tristana","レオナ":"leona","セジュアニ":"sejuani","マルファイト":"malphite","カシオペア":"cassiopeia","ルブラン":"leblanc","小石":"pebbles","ユナラ":"yunara","ドレイヴン":"draven","アリスター":"alistar","マオカイ":"maokai","セット":"sett","ザイラ":"zyra","アフェリオス":"aphelios","アーリ":"ahri","シヴィア":"sivir","ヘカリム":"hecarim","アムム":"amumu","センチネル":"sentinel","ケネン":"kennen","ラックス":"lux","ソラカ":"soraka","ブランブルバック":"brambleback","エズリアル":"ezreal","アッシュ":"ashe","アルーン":"alune","エルダードラゴン":"elderdragon","ナー":"gnar"
+  "ケイル":"kayle","マスター・イー":"masteryi","アジール":"azir","レンガー":"rengar","ワーウィック":"warwick","トリスターナ":"tristana","レオナ":"leona","セジュアニ":"sejuani","マルファイト":"malphite","カシオペア":"cassiopeia","ルブラン":"leblanc","小石":"pebbles","ユナラ":"yunara","ドレイヴン":"draven","アリスター":"alistar","マオカイ":"maokai","セット":"sett","ザイラ":"zyra","アフェリオス":"aphelios","アーリ":"ahri","シヴィア":"sivir","ヘカリム":"hecarim","アムム":"amumu","センチネル":"sentinel","ケネン":"kennen","ラックス":"lux","ソラカ":"soraka","ブランブルバック":"brambleback","エズリアル":"ezreal","アッシュ":"ashe","アルーン":"alune","エルダードラゴン":"elderdragon","ナー":"gnar","ニダリー":"nidalee","マークウルフ":"murkwolf","カ＝ジックス":"khazix","レク＝サイ":"reksai","グロンプ":"gromp"
 };
 const itemSlugs = {
   "デスブレード":"deathblade","ヘクステック ガンブレード":"hextechgunblade","ストライカー フレイル":"strikersflail","ハンド オブ ジャスティス":"handofjustice","インフィニティ エッジ":"infinityedge","ショウジンの矛":"spearofshojin","ジュエル ガントレット":"jeweledgauntlet","ナッシャー トゥース":"nashorstooth","ラバドン デスキャップ":"rabadonsdeathcap","アークエンジェル スタッフ":"archangelsstaff","ブラッドサースター":"bloodthirster","タイタンの誓い":"titansresolve","ステラックの篭手":"steraksgage","クラウンガード":"crownguard","ガーゴイル ストーンプレート":"gargoylestoneplate","スピリット ビサージュ":"spiritvisage","ワーモグ アーマー":"warmogsarmor","ドラゴン クロウ":"dragonsclaw","ブランブル ベスト":"bramblevest","グインソー レイジブレード":"guinsoosrageblade","ラスト ウィスパー":"lastwhisper","ジャイアント スレイヤー":"giantslayer","レッド バフ":"redbuff","レッドバフ":"redbuff","モレロノミコン":"morellonomicon","ステッドファスト ハート":"steadfastheart","アイオニック スパーク":"ionicspark"
@@ -137,6 +160,10 @@ function artifactImage(name){
 
 function artifactFileImage(item){
   return `<span class="image-shell catalog-image"><img src="${metaCdn}/items/${item.file}" alt="${item.name}" loading="lazy" onerror="fallbackImage(this)"><span class="image-fallback" hidden>✦</span></span>`;
+}
+
+function emblemImage(item,className=""){
+  return `<span class="image-shell ${className}"><img src="https://ap.tft.tools/img/items_s14/${item.file}?w=52" alt="${item.name}の紋章" loading="lazy" onerror="fallbackImage(this)"><span class="image-fallback" hidden>紋</span></span>`;
 }
 
 function placementDelta(value, baseline=neutralPlacement){
@@ -202,7 +229,7 @@ const wasianGames = [
 
 const state = { view:"overview", region:"ALL", period:"24h", query:"" };
 const root = document.querySelector("#view-root");
-const titles = {overview:"メタ概要",players:"チャレンジャー",units:"駒・理想装備",artifacts:"アーティファクト適性",traits:"シナジー分析",vod:"Wasianiverson VOD分析"};
+const titles = {overview:"メタ概要",players:"チャレンジャー",units:"駒・理想装備",artifacts:"アーティファクト適性",emblems:"紋章の持たせ先",traits:"シナジー分析",vod:"Wasianiverson VOD分析"};
 const unitPills = list => `<div class="unit-pills">${list.map(x=>`<span class="unit-pill" title="${x}">${x.slice(0,1)}</span>`).join("")}</div>`;
 const fmtDelta = n => `<span class="${n>=0?"gain":"loss"}">${n>=0?"+":""}${n} LP</span>`;
 
@@ -257,6 +284,10 @@ function renderArtifacts(){
   return `<div class="view"><div class="data-source"><b>PBE 18.1 Aug-10</b><span>MetaTFT · 過去3日間 · 740,208構成 · 全31種を平均順位順に表示</span></div><div class="section-head"><div><h2>アーティファクト全一覧</h2><p>1アーティファクトを1行にまとめ、平均順位順に素早く比較できます。</p></div></div><div class="impact-legend"><span><i class="positive-dot"></i>マイナス：4.50位より良い</span><span><i class="negative-dot"></i>プラス：4.50位より悪い</span><small>装備した盤面との相関値であり、装備単体の因果効果ではありません。</small></div><div class="artifact-catalog artifact-list">${artifactCatalog.map(a=>`<article class="catalog-card">${artifactFileImage(a)}<div class="catalog-main"><small>#${a.rank} · Tier ${a.tier}</small><h3>${a.name}</h3><div class="catalog-stats"><span>平均<b>${a.avg.toFixed(2)}</b></span><span>4.50比<b class="${a.delta<=0?"gain":"loss"}">${a.delta>0?"+": ""}${a.delta.toFixed(2)}</b></span><span>勝率<b>${a.win}%</b></span><span>使用率<b>${a.freq}%</b></span></div></div></article>`).join("")}</div><div class="section-head artifact-detail-head"><div><h2>装備先データ取得済み</h2><p>駒の横に、その駒が装備した場合の平均順位を表示します。未確認値は推定しません。</p></div></div><div class="artifact-grid">${artifacts.map(a=>`<article class="artifact-card"><div class="artifact-head">${artifactImage(a.name)}<div><h3>${a.name}</h3><span>${a.type}</span></div><div class="artifact-score"><b>${a.avg.toFixed(2)}</b><small>全装備先平均</small></div></div><div class="impact-summary">${impactBadge(a.avg,neutralPlacement,"4.50位との比較")}</div><p class="artifact-note">${a.note}</p><div class="holder-list">${a.holders.map((h,i)=>{const avg=holderAverage(a.name,h);return `<div>${championImage(h,"holder-thumb")}<span class="holder-rank">${i+1}</span><b>${h}</b><small>${avg===undefined?"平均 未取得":`平均 ${avg.toFixed(2)}位`}</small></div>`}).join("")}</div><div class="artifact-foot"><span>勝率 <b>${a.win}%</b></span><span>PBE実測</span></div></article>`).join("")}</div></div>`;
 }
 
+function renderEmblems(){
+  return `<div class="view"><div class="data-source"><b>18.1 LIVE</b><span>tactics.tools · Platinum+ · 196k構成 · 2026-08-28 09:00取得。重複表示のFlora Fatalisは成績の良い有効行へ統合。</span></div><div class="section-head"><div><h2>紋章一覧とおすすめ装備先</h2><p>平均順位順。行をクリックすると、上位装備先と構成候補をまとめて確認できます。</p></div></div><div class="emblem-list">${[...emblems].sort((a,b)=>a.avg-b.avg).map(e=>`<button class="emblem-row" type="button" data-emblem="${e.name}">${emblemImage(e,"emblem-icon")}<span class="emblem-name"><small>#${e.rank} · ${e.en}</small><b>${e.name}の紋章</b></span><span class="emblem-metric"><small>採用率</small><b>${e.play.toFixed(2)}/8</b></span><span class="emblem-metric"><small>平均順位</small><b>${e.avg.toFixed(2)}</b></span><span class="emblem-metric"><small>Top4</small><b>${e.top4.toFixed(1)}%</b></span><span class="emblem-metric"><small>1位</small><b>${e.win.toFixed(1)}%</b></span><span class="emblem-holders">${e.holders.length?e.holders.slice(0,3).map(h=>`${championImage(h,"holder-thumb")}<i>${h}</i>`).join(""):`<i>装備先データ待ち</i>`}</span><span class="emblem-open">詳細 ›</span></button>`).join("")}</div><p class="vod-caution">おすすめ構成は各紋章の上位装備先から導いた構成候補です。構成単位の平均順位が取得できていないものは、紋章単体の成績と分けて表示します。</p></div>`;
+}
+
 function renderTraits(){
   return `<div class="view"><div class="data-source"><b>PBE 18.1 Aug-10</b><span>MetaTFT · 過去3日間 · 690,976構成 · 平均順位の昇順</span></div><div class="section-head"><div><h2>PBEシナジーランキング</h2><p>発動レベルを含む特性成績。平均順位が良い順です。</p></div></div><div class="trait-grid">${traits.map((t,i)=>`<article class="trait-card"><div class="trait-top"><div class="trait-name"><div class="trait-symbol"><span>${t.symbol}</span></div><div><h3>${i+1}. ${t.name}</h3><small class="region">発動 ${t.levels}</small></div></div><div class="trait-rate"><b>${t.avg}</b><small>平均順位</small></div></div><div class="trait-metrics"><span>Tier <b>${t.tier}</b></span><span>勝率 <b>${t.win}%</b></span><span>頻度 <b>${t.play}%</b></span></div><div class="bar"><i style="width:${Math.min(t.play*2.8,100)}%"></i></div></article>`).join("")}</div></div>`;
 }
@@ -274,6 +305,7 @@ function bindRows(){
     const artifact=holder.closest(".artifact-card")?.querySelector(".artifact-head h3")?.textContent;
     openArtifactHolder(champion,artifact);
   }));
+  document.querySelectorAll("[data-emblem]").forEach(row=>row.addEventListener("click",()=>openEmblem(emblems.find(e=>e.name===row.dataset.emblem))));
 }
 
 function hydrateArtifactRecommendations(){
@@ -290,7 +322,7 @@ function hydrateArtifactRecommendations(){
 
 function render(){
   document.querySelector("#page-title").textContent=titles[state.view];
-  root.innerHTML=({overview:renderOverview,players:renderPlayers,units:renderUnits,artifacts:renderArtifacts,traits:renderTraits,vod:renderVod})[state.view]();
+  root.innerHTML=({overview:renderOverview,players:renderPlayers,units:renderUnits,artifacts:renderArtifacts,emblems:renderEmblems,traits:renderTraits,vod:renderVod})[state.view]();
   if(state.view==="overview") root.querySelector(".view")?.insertAdjacentHTML("beforeend",renderProgression());
   if(state.view==="units") root.querySelector(".view")?.insertAdjacentHTML("beforeend",renderLiveItems());
   if(state.view==="units") root.querySelector(".data-source span").textContent="tactics.tools · Gold+ · 採用率と平均順位を併用。極端に低採用の上振れ駒は除外。";
@@ -307,6 +339,12 @@ function setView(view){
 function openPlayer(p){
   if(!p)return;
   document.querySelector("#player-detail").innerHTML=`<div class="detail"><div class="detail-hero"><div class="avatar">${p.name.slice(0,2)}</div><div><h2>${p.name}</h2><p>${p.region} · Challenger #${p.rank} · Set 18 PBEプレビュー</p></div></div><div class="preview-banner player-warning"><b>サンプル成績</b><span>このLP・平均順位・Top 4率は実測接続前のUI確認用です。</span></div><div class="detail-stats"><div><small>現在LP</small><b>${p.lp}</b></div><div><small>${state.period}増減</small><b class="${p.gain>=0?"gain":"loss"}">${p.gain>=0?"+":""}${p.gain}</b></div><div><small>平均順位</small><b>${p.avg.toFixed(2)}</b></div><div><small>Top 4率</small><b>${p.top4}%</b></div></div><div class="matches unavailable"><h3>直近の試合構成</h3><div class="pending-metrics"><span>Set 18 シナジー・駒・順位</span><b>データ未接続</b><small>古いセットの名称は表示しないよう削除しました。</small></div></div></div>`;
+  document.querySelector("#player-modal").showModal();
+}
+
+function openEmblem(e){
+  if(!e)return;
+  document.querySelector("#player-detail").innerHTML=`<div class="detail"><div class="detail-hero">${emblemImage(e,"unit-portrait")}<div><h2>${e.name}の紋章</h2><p>Patch 18.1 LIVE · Platinum+ · tactics.tools</p></div></div><div class="detail-stats"><div><small>採用率</small><b>${e.play.toFixed(2)}/8</b></div><div><small>平均順位</small><b>${e.avg.toFixed(2)}</b></div><div><small>Top4率</small><b>${e.top4.toFixed(1)}%</b></div><div><small>1位率</small><b>${e.win.toFixed(1)}%</b></div></div><div class="matches"><h3>おすすめの持たせ先</h3><div class="emblem-modal-holders">${e.holders.length?e.holders.map((h,i)=>`<div>${championImage(h,"unit-portrait")}<span>#${i+1}</span><b>${h}</b><small>LIVE上位装備先</small></div>`).join(""):`<div class="comp-placeholder"><b>装備先データ待ち</b><span>サンプルが公開され次第追加します。</span></div>`}</div></div><div class="matches"><h3>おすすめ構成候補</h3><div class="comp-placeholder"><b>${e.comp}</b><span>${e.name}の発動段階を1つ上げ、上位装備先を主力またはサブ主力として採用する形です。</span></div></div><p class="vod-caution">構成候補は上位装備先からの推定です。紋章自体の平均順位・Top4率・1位率はLIVE実測ですが、構成候補の成績とは別指標です。</p></div>`;
   document.querySelector("#player-modal").showModal();
 }
 

@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="TFT上位プレイヤーとメタ推移を分析するAPI不要のプロトタイプ">
+  <title>MetaScope — TFT Challenger Intelligence</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=20260826-launch">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="#" aria-label="MetaScope ホーム">
+        <span class="brand-mark">M</span>
+        <span><b>MetaScope</b><small>TFT INTELLIGENCE</small></span>
+      </a>
+
+      <nav class="main-nav" aria-label="メインナビゲーション">
+        <button class="nav-item active" data-view="overview"><span>◫</span>概要</button>
+        <button class="nav-item" data-view="players"><span>♙</span>プレイヤー</button>
+        <button class="nav-item" data-view="units"><span>◆</span>駒・アイテム</button>
+        <button class="nav-item" data-view="artifacts"><span>✦</span>アーティファクト</button>
+        <button class="nav-item" data-view="traits"><span>⌘</span>シナジー</button>
+        <button class="nav-item" data-view="vod"><span>▶</span>Wasian分析</button>
+      </nav>
+
+      <div class="sidebar-note">
+        <span class="live-dot"></span>
+        <div><b>SET 18 開幕</b><small>神秘の森 · Patch 18.1</small></div>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">GLOBAL CHALLENGER TRACKER</p>
+          <h1 id="page-title">メタ概要</h1>
+        </div>
+        <div class="top-actions">
+          <label class="search-box">
+            <span aria-hidden="true">⌕</span>
+            <input id="global-search" type="search" placeholder="プレイヤーを検索" aria-label="プレイヤーを検索">
+          </label>
+          <span class="updated">更新 <b>2026-08-26</b></span>
+        </div>
+      </header>
+
+      <section class="filterbar" aria-label="データフィルター">
+        <label>地域
+          <select id="region-filter">
+            <option value="ALL">グローバル</option>
+            <option value="JP">JP</option><option value="KR">KR</option>
+            <option value="NA">NA</option><option value="EUW">EUW</option>
+            <option value="BR">BR</option><option value="TW">TW</option>
+          </select>
+        </label>
+        <label>期間
+          <select id="period-filter">
+            <option value="24h">直近24時間</option>
+            <option value="3d">直近3日</option>
+            <option value="7d">直近7日</option>
+          </select>
+        </label>
+        <label>パッチ
+          <select><option>18.1 Launch</option></select>
+        </label>
+        <div class="filter-meta"><span class="pulse"></span> tactics.tools 18.1 LIVE · MetaTFT待機</div>
+      </section>
+
+      <div id="view-root"></div>
+    </main>
+  </div>
+
+  <dialog id="player-modal">
+    <button class="dialog-close" aria-label="閉じる">×</button>
+    <div id="player-detail"></div>
+  </dialog>
+
+  <script src="app.js?v=20260826-launch"></script>
+</body>
+</html>
